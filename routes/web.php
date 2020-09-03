@@ -23,5 +23,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/region/{region}/delete-city/{city}', 'Admin\RegionController@deleteCity')->name('region.delete-city');
         Route::resource('/city', 'Admin\CityController');
         Route::resource('/present-category', 'Admin\PresentCategoryController');
+        Route::resource('/present', 'Admin\PresentController');
+        Route::resource('/participant', 'Admin\ParticipantController');
+    });
+
+    Route::get('category/{id}', 'HomeController@presentByCategory');
+    Route::post('category/{id}', 'HomeController@presentByCategory');
+
+    Route::prefix('loto')->group(function () {
+        //
+    });
+    Route::prefix('result')->group(function () {
+        Route::get('/reset', 'Admin\ResultController@reset');
     });
 });

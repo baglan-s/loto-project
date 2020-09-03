@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Present;
+use App\Models\PresentCategory;
+use App\Models\Region;
+use App\Models\RegionPresent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +18,10 @@ class PresentController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'presents' => Present::all()->sortBy('created_at'),
+        ];
+        return view('admin.present.index', $data);
     }
 
     /**
@@ -24,7 +31,11 @@ class PresentController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'regions'               => Region::all()->sortBy('name'),
+            'present_categories'    => PresentCategory::all(),
+        ];
+        return view('admin.present.create', $data);
     }
 
     /**
@@ -35,7 +46,31 @@ class PresentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has(['name', 'general_amount'])) {
+
+            $present = Present::create([
+                'name'                      => $request->post('name'),
+                'amount'                    => $request->post('general_amount'),
+                'present_category_id'       => $request->post('category'),
+            ]);
+
+            $regions = Region::all();
+
+            foreach ($regions as $region) {
+                RegionPresent::create([
+                    'region_id' => $region->id,
+                    'present_id' => $present->id,
+                    'region_amount' => $request->post('region_amount_' . $region->id),
+                ]);
+            }
+
+            session()->flash('msg_success', 'Новый приз успешно добавлен!');
+        }
+        else {
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
+        }
+
+        return redirect(route('present.index'));
     }
 
     /**
@@ -46,7 +81,7 @@ class PresentController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.present.show');
     }
 
     /**
@@ -57,7 +92,13 @@ class PresentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $present = Present::findOrFail($id);
+        $data = [
+            'present'               => $present,
+            'present_categories'    => PresentCategory::all(),
+            'regions'               => Region::all(),
+        ];
+        return view('admin.present.edit', $data);
     }
 
     /**
@@ -69,7 +110,27 @@ class PresentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->has(['name', 'category'])) {
+            $present = Present::findOrFail($id);
+
+            $present->update([
+                'name'                  => $request->post('name'),
+                'present_category_id'   => $request->post('category'),
+            ]);
+
+            foreach ($present->regions as $region) {
+                $present->regions()->updateExistingPivot($region->id, [
+                    'region_amount' => $request->post('region_amount_' . $region->id),
+                ]);
+            }
+
+            session()->flash('msg_success', 'Новый приз успешно изменен!');
+        }
+        else {
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
+        }
+
+        return redirect(route('present.index'));
     }
 
     /**
@@ -80,6 +141,18 @@ class PresentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($present = Present::findOrFail($id)) {
+            Present::deleting(function ($present) {
+                $present->regions()->detach();
+            });
+            $present->delete();
+
+            session()->flash('msg_success', 'Приз успешно удален!');
+        }
+        else {
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
+        }
+
+        return redirect(route('present.index'));
     }
 }

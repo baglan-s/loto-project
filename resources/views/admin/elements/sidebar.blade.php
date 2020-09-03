@@ -159,20 +159,22 @@
                             </a>
                         </li>
                         <li>
-                            <a href="form.html">
+                            <a href="{{ route('present.index') }}">
                                 <i class="far fa-check-square"></i>
                                 <span>Список призов</span>
                             </a>
                         </li>
                     </ul>
                 </li>
+{{--                <li>--}}
+{{--                    <a href="calendar.html">--}}
+{{--                        <i class="fas fa-calendar-alt"></i>Купоны</a>--}}
+{{--                </li>--}}
                 <li>
-                    <a href="calendar.html">
-                        <i class="fas fa-calendar-alt"></i>Купоны</a>
-                </li>
-                <li>
-                    <a href="map.html">
-                        <i class="fas fa-map-marker-alt"></i>Участники</a>
+                    <a href="{{ route('participant.index') }}">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Участники
+                    </a>
                 </li>
                 <li>
                     <a href="chart.html">

@@ -12,4 +12,21 @@ class City extends Model
     {
         return $this->belongsTo('App\Models\Region');
     }
+
+    public function participants()
+    {
+        return $this->hasMany('App\Models\Participant');
+    }
+
+    public function participantsChances()
+    {
+        $participants = $this->participants;
+        $chances = 0;
+
+        foreach ($participants as $participant) {
+            $chances += $participant->chance;
+        }
+
+        return $chances;
+    }
 }

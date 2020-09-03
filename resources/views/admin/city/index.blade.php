@@ -24,7 +24,7 @@
                                 <th>№</th>
                                 <th>Название</th>
                                 <th>Регион</th>
-                                <th>Количество призов</th>
+                                <th class="text-center">Количество участников</th>
                                 <th>Действие</th>
                             </tr>
                         </thead>
@@ -35,7 +35,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $city->name }}</td>
                                         <td>{!! $city->region->name ?? '<span style="color: red;">На назначено</span>' !!}</td>
-                                        <td>10</td>
+                                        <td class="text-center">{{ $city->participants->count() }}</td>
                                         <td>
                                             <a href="{{ route('city.edit', $city->id) }}" class="btn-sm btn-primary">Изменить</a>
                                             <form action="{{ route('city.destroy', $city->id) }}" method="post" class="d-inline">

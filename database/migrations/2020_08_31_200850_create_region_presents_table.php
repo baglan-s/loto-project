@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePresentsTable extends Migration
+class CreateRegionPresentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePresentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('presents', function (Blueprint $table) {
+        Schema::create('region_presents', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('present_category_id');
-            $table->string('name');
-            $table->integer('amount')->default(0);
-            $table->integer('nominal_amount')->default(0);
+            $table->integer('region_id');
+            $table->integer('present_id');
+            $table->integer('region_amount')->default(0);
+            $table->integer('nominal_region_amount')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePresentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('presents');
+        Schema::dropIfExists('region_presents');
     }
 }

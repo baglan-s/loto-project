@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\RegionPresent;
+use App\Models\Participant;
+use App\Models\Result;
 
 class ResultController extends Controller
 {
@@ -81,5 +84,48 @@ class ResultController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function reset()
+    {
+        $participants       = Participant::all();
+        $region_presents    = RegionPresent::all();
+        $results            = Result::all();
+
+        foreach ($participants as $participant) {
+            $participant->chance = $participant->nominal_chance;
+            $participant->save();
+        }
+
+        foreach ($region_presents as $regionPresent) {
+            $regionPresent->region_amount = $regionPresent->nominal_region_amount;
+            $regionPresent->save();
+        }
+
+        foreach ($results as $result) {
+            $result->delete();
+        }
+
+        return redirect()->back();
+    }
+
+    public static function reduceAmounts(object $city, object $participant, $present_id)
+    {
+        // Уменьшаем шанс участника
+        $participant->chance--;
+        $participant->save();
+
+        // Уменьшаем количество товара по региону
+        $city->region->presents()->updateExistingPivot($present_id, [
+            'region_amount' => (int)$city->region->getPresentAmountByRegion($present_id) - 1
+        ]);
+    }
+
+    public static function setResult($participant_id, $present_id)
+    {
+        return Result::create([
+            'participant_id'    => $participant_id,
+            'present_id'        => $present_id,
+        ]);
     }
 }
