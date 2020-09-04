@@ -32,9 +32,9 @@
                             @foreach($results as $result)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $result->participant->name }}</td>
-                                    <td>{{ $result->participant->city->name }}</td>
-                                    <td>{{ $result->present->name }}</td>
+                                    <td>{{ $result->participant->name ?? '' }}</td>
+                                    <td>{{ $result->participant->city->name ?? '' }}</td>
+                                    <td>{{ $result->present->name ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @endif

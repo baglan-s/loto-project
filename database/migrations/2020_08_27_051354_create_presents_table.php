@@ -17,8 +17,6 @@ class CreatePresentsTable extends Migration
             $table->increments('id');
             $table->integer('present_category_id');
             $table->string('name');
-            $table->integer('amount')->default(0);
-            $table->integer('nominal_amount')->default(0);
             $table->timestamps();
         });
     }

@@ -68,9 +68,21 @@ class ParticipantController extends Controller
                 $participant->card_number = $data['card_number'];
             }
 
-            if (isset($data['city'])) {
-                $participant->city_id = $data['city'];
+            if (isset($data['city_id'])) {
+                $participant->city_id = $data['city_id'];
             }
+
+            if (isset($data['city'])) {
+                $city                   = City::where('name', $data['city'])->first();
+                $participant->city_id   = 0;
+
+                if (!empty($city)) {
+                    $participant->city_id = $city->id;
+                }
+            }
+
+            $participant->chance            = 1;
+            $participant->nominal_chance    = 1;
 
             if (isset($data['chance'])) {
                 $participant->chance            = $data['chance'];
@@ -199,14 +211,18 @@ class ParticipantController extends Controller
 
                     $result[$key] = $value;
 
-                    $this->setNewParticipant($result);
                 }
+                $this->setNewParticipant($result);
             }
+
+            if (file_exists($file_path)) unlink($file_path);
 
             session()->flash('msg_success', 'Участники успешно созданы!');
         }
         else {
-
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
         }
+
+        return redirect(route('participant.index'));
     }
 }

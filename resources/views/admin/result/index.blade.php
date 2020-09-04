@@ -40,11 +40,11 @@
                             @foreach($results as $result)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $result->participant->name }}</td>
-                                    <td>{{ $result->participant->phone }}</td>
-                                    <td>{{ $result->participant->card_number }}</td>
-                                    <td>{{ $result->participant->city->name }}</td>
-                                    <td>{{ $result->present->name }}</td>
+                                    <td>{{ $result->participant->name ?? '' }}</td>
+                                    <td>{{ $result->participant->phone ?? '' }}</td>
+                                    <td>{{ $result->participant->card_number ?? '' }}</td>
+                                    <td>{{ $result->participant->city->name ?? '' }}</td>
+                                    <td>{{ $result->present->name ?? '' }}</td>
                                     <td>
                                         <form action="{{ route('result.destroy', $result->id) }}" method="post" class="d-inline">
                                             {{ csrf_field() }}

@@ -40,12 +40,12 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
 {{--                                            <a href="{{ route('participant.show', $participant->id) }}">{{ $participant->name }}</a>--}}
-                                            <span>{{ $participant->name }}</span>
+                                            <span>{{ $participant->name ?? '' }}</span>
                                         </td>
-                                        <td>{{ $participant->phone }}</td>
-                                        <td>{{ $participant->card_number }}</td>
-                                        <td>{{ $participant->city->name }}</td>
-                                        <td>{{ $participant->chance }}</td>
+                                        <td>{{ $participant->phone ?? '' }}</td>
+                                        <td>{{ $participant->card_number ?? '' }}</td>
+                                        <td>{{ $participant->city->name ?? '' }}</td>
+                                        <td>{{ $participant->chance ?? '' }}</td>
                                         <td>
                                             <a href="{{ route('participant.edit', $participant->id) }}" class="btn-sm btn-primary">Изменить</a>
                                             <form action="{{ route('participant.destroy', $participant->id) }}" method="post" class="d-inline">

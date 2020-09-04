@@ -47,7 +47,7 @@
                                 <div class="col-md-6 col">
                                     <div class="form-group">
                                         <label for="hf-city" class=" form-control-label">Город</label>
-                                        <select name="city" id="hf-city" class="form-control">
+                                        <select name="city_id" id="hf-city" class="form-control">
                                             @if (!empty($cities))
                                                 @foreach($cities as $city)
                                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
