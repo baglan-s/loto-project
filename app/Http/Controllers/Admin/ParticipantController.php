@@ -197,12 +197,16 @@ class ParticipantController extends Controller
                     $key    = $worksheet->getCellByColumnAndRow($col, 1)->getValue();
                     $value  = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
 
-                    $result[$row - 2][$key] = $value;
+                    $result[$key] = $value;
+
+                    $this->setNewParticipant($result);
                 }
             }
 
-            echo '<pre>';
-            print_r($result);
+            session()->flash('msg_success', 'Участники успешно созданы!');
+        }
+        else {
+
         }
     }
 }
