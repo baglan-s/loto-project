@@ -6,6 +6,9 @@ use App\Models\City;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ParticipantController extends Controller
 {
@@ -44,42 +47,48 @@ class ParticipantController extends Controller
     public function store(Request $request)
     {
         if ($request->has(['name', 'phone'])) {
-            $participants = Participant::where('phone', $request->post('phone'))
-                ->orWhere('name', $request->post('name'))
-                ->get();
-
-            if (!$participants->count()) {
-                $participant            = new Participant;
-                $participant->name      = $request->post('name');
-                $participant->phone     = $request->post('phone');
-
-                if ($request->has('card_number')) {
-                    $participant->card_number = $request->post('card_number');
-                }
-
-                if ($request->has('city')) {
-                    $participant->city_id = $request->post('city');
-                }
-
-                if ($request->has('chance')) {
-                    $participant->chance            = $request->post('chance');
-                    $participant->nominal_chance    = $request->post('chance');
-                }
-            }
-            else {
-                $participant = $participants->first();
-                $participant->chance++;
-            }
-
-            if ($participant->save()) {
-                session()->flash('msg_success', 'Новый участник успешно добавлен!');
-            }
-            else {
-                session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
-            }
+            $this->setNewParticipant($request->all());
         }
 
         return redirect(route('participant.index'));
+    }
+
+    public function setNewParticipant($data = array())
+    {
+        $participants = Participant::where('phone', $data['phone'])
+            ->orWhere('name', $data['name'])
+            ->get();
+
+        if (!$participants->count()) {
+            $participant            = new Participant;
+            $participant->name      = $data['name'];
+            $participant->phone     = $data['phone'];
+
+            if (isset($data['card_number'])) {
+                $participant->card_number = $data['card_number'];
+            }
+
+            if (isset($data['city'])) {
+                $participant->city_id = $data['city'];
+            }
+
+            if (isset($data['chance'])) {
+                $participant->chance            = $data['chance'];
+                $participant->nominal_chance    = $data['chance'];
+            }
+        }
+        else {
+            $participant = $participants->first();
+            $participant->chance++;
+            $participant->nominal_chance++;
+        }
+
+        if ($participant->save()) {
+            session()->flash('msg_success', 'Новый участник успешно добавлен!');
+        }
+        else {
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
+        }
     }
 
     /**
@@ -164,5 +173,36 @@ class ParticipantController extends Controller
         }
 
         return redirect(route('participant.index'));
+    }
+
+    public function import(Request $request)
+    {
+        if ($file = $request->file('import')) {
+            $file->move('temp', $file->getClientOriginalName());
+            $file_path = 'temp/' . $file->getClientOriginalName();
+
+            $reader = IOFactory::createReaderForFile($file_path);
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file_path);
+
+            $worksheet = $spreadsheet->getActiveSheet();
+
+            $highestRow = $worksheet->getHighestRow();
+            $highestColumn = $worksheet->getHighestColumn();
+            $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+            $result = [];
+
+            for ($row = 2; $row < $highestRow; $row++) {
+                for ($col = 1; $col <= $highestColumnIndex; $col++) {
+                    $key    = $worksheet->getCellByColumnAndRow($col, 1)->getValue();
+                    $value  = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+
+                    $result[$row - 2][$key] = $value;
+                }
+            }
+
+            echo '<pre>';
+            print_r($result);
+        }
     }
 }

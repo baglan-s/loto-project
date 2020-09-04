@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/present-category', 'Admin\PresentCategoryController');
         Route::resource('/present', 'Admin\PresentController');
         Route::resource('/participant', 'Admin\ParticipantController');
+        Route::post('/participant/import', 'Admin\ParticipantController@import')->name('participant.import');
     });
 
     Route::get('category/{id}', 'HomeController@presentByCategory');
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
         //
     });
     Route::prefix('result')->group(function () {
-        Route::get('/reset', 'Admin\ResultController@reset');
+        Route::get('/', 'Admin\ResultController@index')->name('result.index');
+        Route::get('/show', 'Admin\ResultController@show')->name('result.show');
+        Route::get('/reset', 'Admin\ResultController@reset')->name('result.reset');
+        Route::delete('/delete/{id}', 'Admin\ResultController@destroy')->name('result.destroy');
     });
 });

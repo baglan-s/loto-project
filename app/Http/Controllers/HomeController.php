@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participant;
+use App\Models\Present;
 use Illuminate\Http\Request;
 use App\Models\PresentCategory;
 use App\Http\Controllers\Helpers\LotoController;
@@ -28,24 +29,24 @@ class HomeController extends Controller
         $present_category = PresentCategory::findOrFail($id);
         $loto = new LotoController();
         $msg = '';
-
         if ($request->has(['present_id'])) {
-            $present_id = $request->post('present_id');
+            $present = Present::find($request->post('present_id'));
 
-            if ($city = $loto->getPresentCityRandomized($present_id)) {
-                if ($participant = $loto->getCityParticipantRandomized($city)) {
-                    // Уменьшаем количество шансов и призов
-                    ResultController::reduceAmounts($city, $participant, $present_id);
-                    // Записываем результат
-                    ResultController::setResult($participant->id, $present_id);
-                    $msg = 'Победитель: ' . $participant->name;
+            while ($present->regions->first()->getPresentsAmount($present->id)) {
+                if ($city = $loto->getPresentCityRandomized($present->id)) {
+                    if ($participant = $loto->getCityParticipantRandomized($city)) {
+                        // Уменьшаем количество шансов и призов
+                        ResultController::reduceAmounts($city, $participant, $present->id);
+                        // Записываем результат
+                        ResultController::setResult($participant->id, $present->id);
+                        $msg .= 'Победитель: ' . $participant->name . '! Товар: ' . $present->name. '.<br>';
+                    }
                 }
-                else {
-                    $msg = 'В городе ' . $city->name . ' нет участников или шансы закончились';
+
+                if (Participant::allChances() <= 0) {
+                    $msg = empty($msg) ? 'Шансы участников закончились' : $msg;
+                    break;
                 }
-            }
-            else {
-                $msg = 'Призы закончились';
             }
         }
 

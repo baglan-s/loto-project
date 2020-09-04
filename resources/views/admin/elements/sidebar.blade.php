@@ -177,7 +177,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('result.index') }}">
                         <i class="fas fa-chart-bar"></i>
                         <span>Результаты</span>
                     </a>

@@ -17,7 +17,10 @@ class ResultController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'results' => Result::paginate(15),
+        ];
+        return view('admin.result.index', $data);
     }
 
     /**
@@ -47,9 +50,12 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $data = [
+            'results' => Result::paginate(15),
+        ];
+        return view('admin.result.show', $data);
     }
 
     /**
@@ -83,7 +89,16 @@ class ResultController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Result::findOrFail($id);
+
+        if ($result->delete()) {
+            session()->flash('msg_success', 'Результат успешно удален!');
+        }
+        else {
+            session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
+        }
+
+        return redirect(route('result.index'));
     }
 
     public function reset()
@@ -105,6 +120,7 @@ class ResultController extends Controller
         foreach ($results as $result) {
             $result->delete();
         }
+        session()->flash('msg_success', 'Результаты успешно сброшены!');
 
         return redirect()->back();
     }

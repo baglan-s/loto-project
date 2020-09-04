@@ -7,10 +7,13 @@
             <div class="col-md-12">
                 <div class="overview-wrap">
                     <h2 class="title-1">Список</h2>
-                    <a href="{{ route('participant.create') }}" class="au-btn au-btn-icon au-btn--blue">
-                        <i class="zmdi zmdi-plus"></i>
-                        Добавить участника
-                    </a>
+                    <div class="actions d-flex align-items-center">
+                        <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#mediumModal">Импорт</button>
+                        <a href="{{ route('participant.create') }}" class="au-btn au-btn-icon au-btn--blue">
+                            <i class="zmdi zmdi-plus"></i>
+                            Добавить участника
+                        </a>
+                    </div>
                 </div>
                 @component('components.alert')@endcomponent
             </div>

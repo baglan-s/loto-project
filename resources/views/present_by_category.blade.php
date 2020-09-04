@@ -21,7 +21,7 @@
                             </div>
                             @if (!empty($msg))
                                 <div class="alert alert-primary" role="alert">
-                                    {{ $msg }}
+                                    {!! $msg !!}
                                 </div>
                             @endif
                         </div>
