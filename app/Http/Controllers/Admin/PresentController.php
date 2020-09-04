@@ -50,7 +50,6 @@ class PresentController extends Controller
 
             $present = Present::create([
                 'name'                      => $request->post('name'),
-                'amount'                    => $request->post('general_amount'),
                 'present_category_id'       => $request->post('category'),
             ]);
 
@@ -61,6 +60,7 @@ class PresentController extends Controller
                     'region_id' => $region->id,
                     'present_id' => $present->id,
                     'region_amount' => $request->post('region_amount_' . $region->id),
+                    'nominal_region_amount' => $request->post('region_amount_' . $region->id),
                 ]);
             }
 
@@ -121,6 +121,7 @@ class PresentController extends Controller
             foreach ($present->regions as $region) {
                 $present->regions()->updateExistingPivot($region->id, [
                     'region_amount' => $request->post('region_amount_' . $region->id),
+                    'nominal_region_amount' => $request->post('region_amount_' . $region->id),
                 ]);
             }
 
