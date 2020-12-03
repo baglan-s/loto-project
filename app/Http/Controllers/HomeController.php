@@ -34,7 +34,7 @@ class HomeController extends Controller
         if ($request->has(['present_id'])) {
             $present = Present::find($request->post('present_id'));
 
-            if ($present->category->id == 1) {
+            if ($present->category->name == 'Утешительные призы' || $present->category->name == 'Утешительный приз') {
                 while ($present->regions->first()->getPresentsAmount($present->id)) {
                     if ($city = $loto->getPresentCityRandomized($present->id)) {
                         if ($participant = $loto->getCityParticipantRandomized($city)) {
@@ -77,7 +77,7 @@ class HomeController extends Controller
             'result' => $result,
         ];
 
-        return view('present_by_category_enza', $data);
+        return view('present_by_category', $data);
 
     }
 
