@@ -1,5 +1,150 @@
+@font-face{
+
+    font-family: 'KZ_Days';
+
+    src: url('../fonts/KZ_Days.eot');
+
+    src: url('../fonts/KZ_Days.woff') format('woff');
+
+    /*url('../fonts/KZ_Days.ttf') format('truetype'),*/
+
+font-weight: normal;
+
+    font-style: normal;
+
+}
+
+@font-face{
+
+    font-family: 'KZ_Days_Reg';
+    src: url('../fonts/KZ_Days_Reg.ttf');
+
+url('../fonts/KZ_Days_Reg.ttf') format('truetype'),
+
+font-weight: normal;
+
+    font-style: normal;
+
+}
+
+
+
 main {
     min-height: 100vh;
     background-position: center;
     background-size: cover;
+    background-color: #595757;
+}
+
+.wrapper {
+    background-image: url("/images/main-bg.jpg");
+    /*background-size: cover;*/
+    background-size: 100% 100%;
+    /* height: inherit; */
+    /* max-width: 100%; */
+    height: 100vh;
+    background-repeat: no-repeat;
+    max-width: 1920px;
+}
+
+.container.myCustomContainer {
+    max-width: 1440px;
+    position: relative;
+}
+
+.presentByCategoryWrapper {
+    background: url("/images/header.jpg") no-repeat;
+    max-width: 1920px;
+    position: relative;
+}
+
+.presentByCategoryWrapper #category {
+    padding: 15px;
+    height: initial !important;
+}
+
+.presentByCategoryWrapper div.title-wrapper {
+    text-align: center;
+    margin-top: 3.5rem !important;
+}
+
+.presentByCategoryTitle {
+    color: #a2dfee;
+    font-size: 25px;
+    position: relative;
+}
+
+.wrapperPromoNameImg {
+    max-width: 100%;
+    position: absolute;
+    top: -20px;
+}
+
+.btn.playOut {
+    padding: .5rem 5rem;
+    background-color: #f5770b;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    font-size: 1.3rem;
+}
+
+.result-wrapper {
+    margin: 25px 0;
+}
+
+.resultTable {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 5px;
+    border-color: gray;
+    width: 100%;
+}
+
+.first-th,
+.second-th {
+    color: #ffffff;
+    font-size: 1.3rem;
+}
+
+.first-col {
+    width: 78%;
+}
+
+.second-col {
+    width: 20%;
+}
+
+.first-users,
+.second-users {
+    background-color: #e1e1e1;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    color: #595757;
+    font-size: 1.2rem;
+}
+
+.second-users {
+    position: relative;
+}
+
+.star-icon {
+    max-width: 100%;
+    width: 25px;
+    height: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+.siteUrl {
+    position: absolute;
+    bottom: -15px;
+    right: 70px;
+}
+
+.siteUrl a {
+    color: #0393ad;
+    font-size: 1.5rem;
 }

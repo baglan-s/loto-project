@@ -2,22 +2,17 @@
 
 @section('content')
 
-    <div class="presentByCategoryWrapper">
+    <div class="presentByCategoryWrapper d-flex flex-column justify-content-between">
         <div class="container myCustomContainer">
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="logo mt-5"><img src="/images/logo2.png" alt=""></div>
+                <div class="col-sm-2">
+                    <div class="logo mt-4"><img src="/images/home_logo.png" alt=""></div>
                 </div>
-                <div class="col-sm-1">
-                    <div class="title-wrapper mt-5">
-                        <h3 class="presentByCategoryTitle"><strong>САНАТ</strong></h3>
-                    </div>
-                </div>
-                <div class="col-sm-8">
+                <div class="col-sm-10">
                     <form method="post" class="mt-5">
                         {{ csrf_field() }}
                         <div class="row d-flex justify-content-center">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <select name="present_id" id="category" class="form-control mb-4">
                                         @foreach($present_category->presents as $present)
@@ -32,13 +27,8 @@
                                 @endif
                             </div>
                             <div class="col-md-4">
-                                <div class="wrapperPromoName">
-                                    <img class="wrapperPromoNameImg" src="/images/promo-name2.png" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
                                 <div class="form-group d-flex justify-content-center">
-                                    <button class="btn btn-lg btn-primary playOut"><strong>РАЗЫГРАТЬ</strong></button>
+                                    <button class="btn btn-lg btn-primary playOut"><strong>ИТОГИ</strong></button>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +42,7 @@
                         <table class="resultTable">
                             <thead>
                                 <tr>
-                                    <th class="first-col first-th">АТЫ-ЖӨНІ</th>
+                                    <th class="first-col first-th">Ф.И.О.</th>
                                     @if (isset($result[0]) && isset($result[0]['card_number']))
                                         <th class="second-col second-th">БОНУСТЫҚ КАРТА НӨМІРІ</th>
                                     @endif
@@ -63,15 +53,13 @@
                                 @foreach ($result as $participant)
                                     <tr>
                                         <td class="first-col first-users">{{ $participant['name'] }}</td>
-                                        @if (isset($participant['card_number']))
-                                            <td class="second-col second-users">{{ $participant['card_number'] }} <img class="star-icon" src="/images/star.svg" alt=""> </td>
-                                        @endif
+                                        <td class="second-col second-users">{{ $participant['card_number'] ?? '' }} <i class="star-icon-font fas fa-star"></i> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="first-col first-users"></td>
-                                    <td class="second-col second-users"> <img class="star-icon" src="/images/star.svg" alt=""> </td>
+                                    <td class="second-col second-users"> <i class="star-icon-font fas fa-star"></i> </td>
                                 </tr>
                             @endif
 
@@ -80,11 +68,28 @@
                     </div>
                 </div>
             </div>
-
-            <div class="siteUrl">
-                <a href="https://evrika.com" title="Интернет - магазин Evrika" target="_blank"><strong>EVRIKA.COM</strong></a>
-            </div>
         </div>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="sign">
+                            <div class="partners">
+                                <img src="/images/footer1.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sign d-flex justify-content-end">
+                            <a href="https://homecomfort.kz">homecomfort.kz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <img class="chair-right" src="/images/chair-right.png" alt="">
+{{--        <img class="home-present" src="/images/home-present.png" alt="">--}}
+
     </div>
 
 @endsection

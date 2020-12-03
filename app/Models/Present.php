@@ -17,4 +17,9 @@ class Present extends Model
     {
         return $this->belongsToMany('App\Models\Region', 'region_presents')->withPivot('id', 'region_amount');
     }
+
+    public function regionPresents()
+    {
+        return $this->hasMany('App\Models\RegionPresent', 'present_id');
+    }
 }

@@ -16,8 +16,6 @@ class PresentSeeder extends Seeder
         Present::create([
             'present_category_id'   => 1,
             'name'                  => 'Iphone S7',
-            'amount'                => 12,
-            'nominal_amount'        => 12,
         ]);
         RegionPresent::create([
             'region_id'             => 1,
@@ -41,8 +39,6 @@ class PresentSeeder extends Seeder
         Present::create([
             'present_category_id'   => 1,
             'name'                  => 'Samsung Galaxy S10',
-            'amount'                => 12,
-            'nominal_amount'        => 12,
         ]);
         RegionPresent::create([
             'region_id'             => 1,
@@ -66,8 +62,6 @@ class PresentSeeder extends Seeder
         Present::create([
             'present_category_id'   => 1,
             'name'                  => 'Mercedes-Benz S63 AMG',
-            'amount'                => 3,
-            'nominal_amount'        => 3,
         ]);
         RegionPresent::create([
             'region_id'             => 1,
