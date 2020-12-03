@@ -6,7 +6,6 @@ use App\Models\City;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -20,7 +19,7 @@ class ParticipantController extends Controller
     public function index()
     {
         $data = [
-            'participants' => Participant::paginate(15),
+            'participants' => Participant::paginate(25),
         ];
         return view('admin.participant.index', $data);
     }
@@ -55,14 +54,19 @@ class ParticipantController extends Controller
 
     public function setNewParticipant($data = array())
     {
-        $participants = Participant::where('phone', $data['phone'])
-            ->orWhere('name', $data['name'])
-            ->get();
+//        $participants = Participant::where('phone', $data['phone'])
+//            ->orWhere('name', $data['name'])
+//            ->get();
+
+        $participants = Participant::where('name', $data['name'])->get();
 
         if (!$participants->count()) {
             $participant            = new Participant;
             $participant->name      = $data['name'];
-            $participant->phone     = $data['phone'];
+
+            if (isset($data['phone'])) {
+                $participant->phone = $data['phone'];
+            }
 
             if (isset($data['card_number'])) {
                 $participant->card_number = $data['card_number'];

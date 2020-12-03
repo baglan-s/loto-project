@@ -37,7 +37,7 @@
                                             {{ $present->name }}
                                         </td>
                                         <td>{{ $present->category->name }}</td>
-                                        <td>{{ $present->amount }}</td>
+                                        <td>@if (!empty($present->regions()->first())){{ $present->regions()->first()->getPresentsAmount($present->id) }} @endif</td>
                                         <td>
                                             <a href="{{ route('present.edit', $present->id) }}" class="btn-sm btn-primary">Изменить</a>
                                             <form action="{{ route('present.destroy', $present->id) }}" method="post" class="d-inline">

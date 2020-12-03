@@ -91,6 +91,14 @@ class ResultController extends Controller
     {
         $result = Result::findOrFail($id);
 
+        $result->participant->chance = $result->participant->nominal_chance;
+        $result->participant->save();
+
+        foreach ($result->present->regionPresents as $regionPresent) {
+            $regionPresent->region_amount = $regionPresent->nominal_region_amount;
+            $regionPresent->save();
+        }
+
         if ($result->delete()) {
             session()->flash('msg_success', 'Результат успешно удален!');
         }
@@ -103,23 +111,20 @@ class ResultController extends Controller
 
     public function reset()
     {
-        $participants       = Participant::all();
-        $region_presents    = RegionPresent::all();
         $results            = Result::all();
 
-        foreach ($participants as $participant) {
-            $participant->chance = $participant->nominal_chance;
-            $participant->save();
-        }
-
-        foreach ($region_presents as $regionPresent) {
-            $regionPresent->region_amount = $regionPresent->nominal_region_amount;
-            $regionPresent->save();
-        }
-
         foreach ($results as $result) {
+            $result->participant->chance = $result->participant->nominal_chance;
+            $result->participant->save();
+
+            foreach ($result->present->regionPresents as $regionPresent) {
+                $regionPresent->region_amount = $regionPresent->nominal_region_amount;
+                $regionPresent->save();
+            }
+
             $result->delete();
         }
+
         session()->flash('msg_success', 'Результаты успешно сброшены!');
 
         return redirect()->back();
