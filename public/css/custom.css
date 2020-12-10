@@ -38,7 +38,7 @@ main {
 }
 
 .wrapper {
-    background-image: url("/images/11-main.jpg");
+    background-image: url("/images/main_iphone.jpg");
     background-size: cover;
     background-position: bottom;
     /*background-size: 100% 100%;*/
