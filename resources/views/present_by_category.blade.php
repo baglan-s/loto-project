@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="wrapperPromoName">
-                                    <img class="wrapperPromoNameImg" src="/images/promo-name2.png" alt="">
+{{--                                    <img class="wrapperPromoNameImg" src="/images/promo-name2.png" alt="">--}}
                                 </div>
                             </div>
                             <div class="col-md-4">
