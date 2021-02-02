@@ -84,6 +84,15 @@ $(function () {
     $('.logo').click(function () {
         window.location.href = '/';
     });
+
+    $('.playOut').click(function(e) {
+        e.preventDefault();
+        $('.preloader').css('display', 'flex');
+
+        setTimeout(function () {
+            $('form.mt-5').submit();
+        }, 2000)
+    })
 });
 
 /***/ })
