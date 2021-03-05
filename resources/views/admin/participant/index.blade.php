@@ -9,10 +9,18 @@
                     <h2 class="title-1">Список</h2>
                     <div class="actions d-flex align-items-center">
                         <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#mediumModal">Импорт</button>
-                        <a href="{{ route('participant.create') }}" class="au-btn au-btn-icon au-btn--blue">
+                        <a href="{{ route('participant.create') }}" class="au-btn au-btn-icon au-btn--blue mr-1">
                             <i class="zmdi zmdi-plus"></i>
                             Добавить участника
                         </a>
+                        <form action="{{ route('participant.reset') }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            {{ csrf_field() }}
+                            <button type="submit" class="au-btn au-btn-icon btn-danger">
+                                <i class="zmdi zmdi-minus"></i>
+                                Удалить всех
+                            </button>
+                        </form>
                     </div>
                 </div>
                 @component('components.alert')@endcomponent

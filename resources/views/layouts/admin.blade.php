@@ -81,6 +81,7 @@
 
         <!-- Main JS-->
         <script src="{{ asset('admin-assets/js/main.js') }}"></script>
+        <script src="{{ asset('admin-assets/js/custom.js') }}"></script>
 
     </body>
 

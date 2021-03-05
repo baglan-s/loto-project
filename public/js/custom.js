@@ -92,7 +92,7 @@ $(function () {
         setTimeout(function () {
             $('form.mt-5').submit();
         }, 2000)
-    })
+    });
 });
 
 /***/ })

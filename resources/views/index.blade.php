@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="wrapper">
+    <div class="wrapper" style="background-image: url({{ asset($setting->main_image) }})">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">

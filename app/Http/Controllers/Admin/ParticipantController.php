@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\City;
 use App\Models\Participant;
+use App\Models\Result;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -187,6 +189,16 @@ class ParticipantController extends Controller
         else {
             session()->flash('msg_error', 'Произошла ошибка обратитесь к администратору!');
         }
+
+        return redirect(route('participant.index'));
+    }
+
+    public function reset()
+    {
+        DB::table('participants')->truncate();
+        DB::table('results')->truncate();
+
+        session()->flash('msg_success', 'Участники успешно удалены!');
 
         return redirect(route('participant.index'));
     }

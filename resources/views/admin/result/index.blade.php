@@ -7,10 +7,14 @@
             <div class="col-md-12">
                 <div class="overview-wrap">
                     <h2 class="title-1">Результаты розыгрыша</h2>
-                    <a href="{{ route('result.reset') }}" class="au-btn au-btn-icon au-btn--blue2">
-                        <i class="zmdi zmdi-plus"></i>
-                        Сбросить результаты
-                    </a>
+                    <form action="{{ route('result.reset') }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        {{ csrf_field() }}
+                        <button type="submit" class="au-btn au-btn-icon au-btn--blue2">
+                            <i class="zmdi zmdi-plus"></i>
+                            Сбросить результаты
+                        </button>
+                    </form>
                 </div>
                 @component('components.alert')@endcomponent
             </div>

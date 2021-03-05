@@ -182,6 +182,12 @@
                         <span>Результаты</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('setting.edit', 1) }}">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Настройки</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

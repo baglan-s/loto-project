@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Participant;
 use App\Models\Present;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Models\PresentCategory;
 use App\Http\Controllers\Helpers\LotoController;
@@ -21,7 +22,9 @@ class HomeController extends Controller
     {
         $data = [
             'categories' => PresentCategory::all(),
+            'setting' => Setting::find(1),
         ];
+
         return view('index', $data);
     }
 
