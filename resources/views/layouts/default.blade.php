@@ -22,7 +22,6 @@
             </div>
         </main>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('font-awesome/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
     </body>
 </html>
