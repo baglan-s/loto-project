@@ -117,12 +117,21 @@ class PresentController extends Controller
                 'name'                  => $request->post('name'),
                 'present_category_id'   => $request->post('category'),
             ]);
-
-            foreach ($present->regions as $region) {
-                $present->regions()->updateExistingPivot($region->id, [
-                    'region_amount' => $request->post('region_amount_' . $region->id),
-                    'nominal_region_amount' => $request->post('region_amount_' . $region->id),
-                ]);
+            $regions = Region::all();
+            foreach ($regions as $region) {
+                if (!$present->regions()->find($region->id)) {
+                    RegionPresent::create([
+                        'region_id' => $region->id,
+                        'present_id' => $present->id,
+                        'region_amount' => $request->post('region_amount_' . $region->id),
+                        'nominal_region_amount' => $request->post('region_amount_' . $region->id),
+                    ]);
+                } else {
+                    $present->regions()->updateExistingPivot($region->id, [
+                        'region_amount' => $request->post('region_amount_' . $region->id),
+                        'nominal_region_amount' => $request->post('region_amount_' . $region->id),
+                    ]);
+                }
             }
 
             session()->flash('msg_success', 'Новый приз успешно изменен!');
